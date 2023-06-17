@@ -1,101 +1,141 @@
-// Modules
-// const {sayHello} = require('./helpers/say.Hello.helper');
-// sayHello();
-// Global variables
-// console.log(__dirname);
-// console.log(__filename);
-// console.log(process.cwd());
-// path
-// const path = require('path');
-// const joinPath = path.join('folder', 'folder2', 'text.txt');
-// const notmalizePath = path.normalize('//////test///\/test2/test3////////test4');
-// const resolvedPath = path.resolve('folder', 'folder2', 'text.txt');
-// console.log(resolvedPath);
-//OS
-// const os = require('os');
-// console.log(os.cpus());
-// console.log(os.arch());
-
-//FS
-// const fs = require('fs');
-// const path = require('path');
-// const text2Path = path.join(__dirname, 'folder', 'folder2', 'text2.txt');
-
-// fs.writeFile(text2Path, 'Hello', (err)=> {
-//     if (err) throw new Error(err.message);
-// })
+// EVENTS
+// //
+// const events = require('node:events');
 //
-// fs.readFile(text2Path, {encoding: 'utf-8'}, (err, data)=> {
-//     if (err) throw new Error(err.message);
+// const eventEmitter = new events();
+//
+// eventEmitter.on('click', (data)=> {
 //     console.log(data);
+//     console.log('click, click, click');
+// });
+// eventEmitter.emit('click', {data:'hello'});
+//
+// eventEmitter.once('clik', ()=>{
+//     console.log('1234567890')
 // })
-// fs.appendFile(text2Path, '\nhello world', (err)=>{
-//     if (err) throw new Error(err.message);
+// eventEmitter.emit('clik');
+// console.log(eventEmitter.eventNames());
+
+// STRIM
+// const fs = require('node:fs');
+// const path = require('node:path');
+//
+// const readStream = fs.createReadStream('text.txt', {highWaterMark:50*1024});
+// const writeStream = fs.createWriteStream('text2.txt');
+// readStream.on('data', (chunk)=>{
+//     console.log(chunk);
+//     writeStream.write(chunk);
+//
+// })
+// readStream.on('error', ()=>{
+//     readStream.destroy();
+//     writeStream.end('ERROR!!!!!!!!!!!!!!!!!!!!')
+// })
+//     .pipe(writeStream)
+
+const express = require('express');
+const fileService = require('./file.service');
+
+const app = express();
+
+app.use(express.json())
+app.use(express.urlencoded({extended: true}));
+
+
+app.get('/users', async (req, res) => {
+    const users = await fileService.readDB();
+    res.json(users)
+})
+
+// app.get('/users/:id', (req, res) => {
+//
+//     const {id} = req.params;
+//     res.json(users[+id])
 // })
 //
-// fs.readdir(path.join(__dirname, 'folder'),{withFileTypes: true}, (err, files)=>{
-//     if (err) throw new Error(err.message);
-//     console.log(files);
-//     files.forEach(file=>{
-//         console.log(file.isDirectory());
-//     })
-// })
-// fs.mkdir(path.join(__dirname,'folder', 'folder4'),(err)=>{
-//     if (err) throw new Error(err.message);
-// })
-// fs.unlink(text2Path, (err)=>{
-//     if (err) throw new Error(err.message);
-// })
-// fs.rmdir(path.join(__dirname, 'folder4'),(err)=>{
-//     if (err) throw new Error(err.message);
-// })
-
-const fs = require('node:fs/promises');
-const path = require('node:path');
-
-// const foo = async () => {
-//     const basePath = path.join(process.cwd(), 'baseFolder');
-//
-//     await fs.mkdir(basePath, {recursive: true});
-//     const fileNames = ['file1.txt', 'file2.txt', 'file3.txt', 'file4.txt', 'file5.txt'];
-//     const folderNames = ['folder1', 'folder2', 'folder3', 'folder4', 'folder5'];
-//
-//     for (const folder of folderNames) {
-//         await fs.mkdir(path.join(basePath, folder), {recursive: true})
-//     }
-//
-//     for (const file of fileNames) {
-//         await fs.writeFile(path.join(basePath, file), 'Hello')
-//     }
-//
-//     const files = await fs.readdir(basePath);
-//     for (const file of files) {
-//         const stat = await fs.stat(path.join(basePath, file));
-//         console.log(path.join(basePath, file), ' : ', stat.isDirectory() ? 'folder' : 'file');
-//     }
-// }
-// foo();
-
-const foo = async () => {
-    const basePath = path.join(process.cwd(), 'baseFolder');
-
-    await fs.mkdir(basePath, {recursive:true});
-    const fileNames = ['file1.txt', 'file2.txt', 'file3.txt', 'file4.txt', 'file5.txt'];
-    const folderNames = ['folder1', 'folder2', 'folder3', 'folder4', 'folder5'];
-
-    await Promise.all(fileNames.map(async (folder) => {
-        const folderPath = path.join(basePath, folder);
-        await fs.mkdir(folderPath, {recursive:true})
-        await Promise.all(fileNames.map(async (file) => {
-            await fs.writeFile(path.join(folderPath, file), 'Hello')
-        }));
-    }));
-
-    const files = await fs.readdir(basePath);
-    for (const file of files) {
-        const stat = await fs.stat(path.join(basePath, file));
-        console.log(path.join(basePath, file), ' : ', stat.isDirectory() ? 'folder' : 'file');
+app.post('/users', async (req, res) => {
+    const {name, age, gender} = req.body;
+    if (!name) {
+        return res.status(400).json('name is wrong')
     }
-}
+    if (!age || age < 0 || age > 100) {
+        return res.status(400).json('age is wrong')
+    }
+    if (!gender || gender !== 'male' && 'female') {
+        return res.status(400).json('gender not valid')
+    }
 
-foo();
+    const users = await fileService.readDB();
+
+    const newUser = {
+        id: users.length ? users[users.length - 1].id + 1 : 1,
+        name,
+        age,
+        gender
+    }
+    users.push(newUser);
+    await fileService.writeDB(users);
+
+    res.status(201).json(newUser)
+});
+
+app.get('/users/:id', async (req, res) => {
+    const {id} = req.params;
+
+    const users = await fileService.readDB();
+
+    const  user = users.find((user) => user.id === +id);
+    if (!user) {
+        return res.status(422).json('User not found');
+    }
+    res.json(user)
+})
+
+app.patch('/users/:id', async (req, res)=> {
+    const {id} = req.params;
+    const {name, age, gender} = req.body;
+
+    if (name && name.length <3) {
+        return res.status(400).json('name is wrong')
+    }
+    if (age &&(age < 0 || age > 100)) {
+        return res.status(400).json('age is wrong')
+    }
+    if (gender && (gender !== 'male' && 'female')) {
+        return res.status(400).json('gender not valid')
+    }
+
+    const users = await fileService.readDB();
+    const user = users.find((user) => user.id === +id)
+
+    if (!user) {
+        return res.status(422).json('user not found');
+    }
+    if (name) user.name = name;
+    if (age) user.age = age;
+    if (gender) user.gender = gender;
+
+    await fileService.writeDB(users);
+    res.status(201).json(user);
+})
+
+
+app.delete('/users/:id', async (req, res)=> {
+    const {id} = req.params;
+
+    const users = await fileService.readDB();
+    const index = users.findIndex((user) => user.id === +id)
+
+    if (index === -1) {
+        return res.status(422).json('user not found');
+    }
+    users.splice(index, 1);
+    await fileService.writeDB(users);
+    res.sendStatus(204);
+})
+
+const PORT = 5001;
+
+app.listen(PORT, () => {
+    console.log(`Server has started  on port ${PORT}🤞`)
+})
