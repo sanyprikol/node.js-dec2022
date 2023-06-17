@@ -119,7 +119,6 @@ app.patch('/users/:id', async (req, res)=> {
     res.status(201).json(user);
 })
 
-
 app.delete('/users/:id', async (req, res)=> {
     const {id} = req.params;
 

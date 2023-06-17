@@ -7,6 +7,7 @@ module.exports = {
         const json = buffer.toString();
         return json ? JSON.parse(json) : [];
     },
+
     writeDB: async (users) => {
         await fs.writeFile(path.join(process.cwd(), 'db.json'), JSON.stringify(users))
     }
