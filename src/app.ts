@@ -1,99 +1,111 @@
-import express, { Request, Response } from "express";
+import express, { NextFunction, Request, Response } from "express";
+import * as mongoose from "mongoose";
 
-const fileService = exports("./file.service");
+import { configs } from "./configs/config";
+import { ApiError } from "./errors";
+import { User } from "./models/User.model";
+import { IUser } from "./types/user.type";
+import { UserValidator } from "./validators";
 
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get("/users", async (req: Request, res: Response) => {
-  const users = await fileService.readDB();
-  res.json(users);
+// CRUD - create, read, update, delete
+
+app.get(
+  "/users",
+  async (req: Request, res: Response): Promise<Response<IUser[]>> => {
+    try {
+      const users = await User.find().select("-password");
+
+      return res.json(users);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+);
+
+app.get(
+  "/users/:id",
+  async (req: Request, res: Response): Promise<Response<IUser>> => {
+    try {
+      const user = await User.findById(req.params.id);
+
+      return res.json(user);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+);
+
+app.post(
+  "/users",
+  async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<Response<IUser>> => {
+    try {
+      const { error, value } = UserValidator.create.validate(req.body);
+      if (error) {
+        throw new ApiError(error.message, 400);
+      }
+      const createdUser = await User.create(value);
+
+      return res.status(201).json(createdUser);
+    } catch (e) {
+      next(e);
+    }
+  }
+);
+
+app.put(
+  "/users/:id",
+  async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<Response<IUser>> => {
+    try {
+      const { id } = req.params;
+      const { error, value } = UserValidator.update.validate(req.body);
+      if (error) {
+        throw new ApiError(error.message, 400);
+      }
+      const updatedUser = await User.findOneAndUpdate(
+        { _id: id },
+        { ...value },
+        { returnDocument: "after" }
+      );
+
+      return res.status(200).json(updatedUser);
+    } catch (e) {
+      next(e);
+    }
+  }
+);
+
+app.delete(
+  "/users/:id",
+  async (req: Request, res: Response): Promise<Response<void>> => {
+    try {
+      const { id } = req.params;
+      await User.deleteOne({ _id: id });
+
+      return res.sendStatus(200);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+);
+
+app.use((error: any, req: Request, res: Response, next: NextFunction) => {
+  const status = error.status || 500;
+  return res.status(status).json(error.message);
 });
-
-app.post("/users", async (req: Request, res: Response) => {
-  const { name, age, gender } = req.body;
-  if (!name) {
-    return res.status(400).json("name is wrong");
-  }
-  if (!age || age < 0 || age > 100) {
-    return res.status(400).json("age is wrong");
-  }
-  if (!gender || (gender !== "male" && "female")) {
-    return res.status(400).json("gender not valid");
-  }
-
-  const users = await fileService.readDB();
-
-  const newUser = {
-    id: users.length ? users[users.length - 1].id + 1 : 1,
-    name,
-    age,
-    gender,
-  };
-  users.push(newUser);
-  await fileService.writeDB(users);
-
-  res.status(201).json(newUser);
-});
-
-app.get("/users/:id", async (req: Request, res: Response) => {
-  const { id } = req.params;
-
-  const users = await fileService.readDB();
-
-  const user = users.find((user) => user.id === +id);
-  if (!user) {
-    return res.status(422).json("User not found");
-  }
-  res.json(user);
-});
-
-app.patch("/users/:id", async (req: Request, res: Response) => {
-  const { id } = req.params;
-  const { name, age, gender } = req.body;
-
-  if (name && name.length < 3) {
-    return res.status(400).json("name is wrong");
-  }
-  if (age && (age < 0 || age > 100)) {
-    return res.status(400).json("age is wrong");
-  }
-  if (gender && gender !== "male" && "female") {
-    return res.status(400).json("gender not valid");
-  }
-
-  const users = await fileService.readDB();
-  const user = users.find((user) => user.id === +id);
-
-  if (!user) {
-    return res.status(422).json("user not found");
-  }
-  if (name) user.name = name;
-  if (age) user.age = age;
-  if (gender) user.gender = gender;
-
-  await fileService.writeDB(users);
-  res.status(201).json(user);
-});
-
-app.delete("/users/:id", async (req: Request, res: Response) => {
-  const { id } = req.params;
-
-  const users = await fileService.readDB();
-  const index = users.findIndex((user) => user.id === +id);
-
-  if (index === -1) {
-    return res.status(422).json("user not found");
-  }
-  users.splice(index, 1);
-  await fileService.writeDB(users);
-  res.sendStatus(204);
-});
-
-const PORT = 5001;
-
-app.listen(PORT, () => {
-  console.log(`Server has started  on port ${PORT}🤞`);
+app.listen(configs.PORT, () => {
+  mongoose.connect(configs.DB_URL);
+  console.log(`Server has started on PORT ${configs.PORT}`);
 });
