@@ -4,16 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a6cfe6cf-b483-4f87-82b1-02f5bf44f46c" name="Changes" comment="node 2023 joi">
-      <change afterPath="$PROJECT_DIR$/src/controllers/user.controller.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/middlewares/user.middleware.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/repositories/user.repository.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/routers/user.router.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/services/user.service.ts" afterDir="false" />
+    <list default="true" id="a6cfe6cf-b483-4f87-82b1-02f5bf44f46c" name="Changes" comment="node 2023 arhitecture">
+      <change afterPath="$PROJECT_DIR$/src/middlewares/common.middleware.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/middlewares/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.eslintrc.js" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintrc.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/errors/api.error.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/errors/api.error.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/types/user.type.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/user.type.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/user.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/user.controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middlewares/user.middleware.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/middlewares/user.middleware.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/User.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/User.model.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/repositories/user.repository.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/repositories/user.repository.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routers/user.router.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/user.router.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/user.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/user.service.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,6 +38,19 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="fd8cef21-b86d-4213-8ba0-09dfc08346b7" />
+        <option name="url" value="https://github.com/sanyprikol/node.js-dec2022.git" />
+      </UrlAndAccount>
+    </option>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -62,7 +78,7 @@
     &quot;node.js.selected.package.standard&quot;: &quot;&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;settings.javascript.linters.eslint&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;Errors&quot;,
     &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\admin\\IdeaProjects\\node.js-dec2022\\node_modules\\typescript\\lib&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
@@ -119,7 +135,12 @@
       <workItem from="1687805719276" duration="1096000" />
       <workItem from="1687969377226" duration="2453000" />
       <workItem from="1688055338038" duration="5853000" />
-      <workItem from="1688144935897" duration="4829000" />
+      <workItem from="1688144935897" duration="4865000" />
+      <workItem from="1688230050050" duration="588000" />
+      <workItem from="1688230663756" duration="2123000" />
+      <workItem from="1688232831884" duration="4017000" />
+      <workItem from="1688409956513" duration="2104000" />
+      <workItem from="1688494365007" duration="3611000" />
     </task>
     <task id="LOCAL-00001" summary="node">
       <created>1685471923854</created>
@@ -156,7 +177,14 @@
       <option name="project" value="LOCAL" />
       <updated>1687794565297</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="node 2023 arhitecture">
+      <created>1688149796153</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1688149796153</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -167,7 +195,8 @@
     <MESSAGE value="node 2023  1" />
     <MESSAGE value="node 2023 ts" />
     <MESSAGE value="node 2023 joi" />
-    <option name="LAST_COMMIT_MESSAGE" value="node 2023 joi" />
+    <MESSAGE value="node 2023 arhitecture" />
+    <option name="LAST_COMMIT_MESSAGE" value="node 2023 arhitecture" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

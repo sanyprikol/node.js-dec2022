@@ -5,19 +5,39 @@ import { IUser } from "../types/user.type";
 
 class UserService {
   public async findAll(): Promise<IUser[]> {
-    try {
-      return User.find().select("-password");
-    } catch (e) {
-      throw new ApiError(e.message, e.status);
-    }
+    return await User.find();
   }
 
   public async create(data: IUser): Promise<IUser> {
-    return userReposytory.create(data);
+    return await userReposytory.create(data);
   }
 
   public async findById(id: string): Promise<IUser> {
-    return User.findById(id);
+    return await this.getOneByIdOrTrow(id);
+  }
+
+  public async updateById(userId: string, dto: Partial<IUser>): Promise<IUser> {
+    await this.getOneByIdOrTrow(userId);
+
+    return await User.findOneAndUpdate(
+      { _id: userId },
+      { ...dto },
+      { returnDocument: "after" }
+    );
+  }
+
+  public async deleteById(userId: string): Promise<void> {
+    await this.getOneByIdOrTrow(userId);
+
+    await User.deleteOne({ _id: userId });
+  }
+
+  private async getOneByIdOrTrow(userId: string): Promise<IUser> {
+    const user = await User.findById(userId);
+    if (!user) {
+      throw new ApiError("User not foundt", 422);
+    }
+    return user;
   }
 }
 
