@@ -21,4 +21,8 @@ export class UserValidator {
     age: this.age,
     gender: this.gender,
   });
+  static login = Joi.object({
+    email: this.email.required(),
+    password: this.password.required(),
+  });
 }

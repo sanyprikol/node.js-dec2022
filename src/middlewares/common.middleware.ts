@@ -11,7 +11,7 @@ class CommonMiddleware {
         const id = req.params[field];
 
         if (!isObjectIdOrHexString(id)) {
-          throw new ApiError("Id id valid", 400);
+          throw new ApiError(`Id ${field} not valid`, 400);
         }
 
         next();
