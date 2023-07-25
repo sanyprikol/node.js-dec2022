@@ -4,26 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a6cfe6cf-b483-4f87-82b1-02f5bf44f46c" name="Changes" comment="node 2023 arhitecture">
-      <change afterPath="$PROJECT_DIR$/src/middlewares/auth.middleware.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/Token.model.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/routers/auth.router.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/services/auth.service.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/services/password.service.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/services/token.service.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/types/token.tupes.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+    <list default="true" id="a6cfe6cf-b483-4f87-82b1-02f5bf44f46c" name="Changes" comment="node 2023 lesson 6">
+      <change afterPath="$PROJECT_DIR$/src/constants/email.constants.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/email-templates/layouts/main.hbs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/email-templates/partials/footer.hbs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/email-templates/partials/header.hbs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/email-templates/views/register.hbs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/enums/email.enum.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/services/email.service.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/configs/config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/configs/config.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controllers/user.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/user.controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helper.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/auth.controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middlewares/common.middleware.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/middlewares/common.middleware.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middlewares/user.middleware.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/middlewares/user.middleware.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/User.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/User.model.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routers/user.router.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/user.router.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/types/user.type.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/user.type.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/validators/user.validator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/validators/user.validator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/auth.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/auth.service.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,7 +75,8 @@
     &quot;node.js.selected.package.standard&quot;: &quot;&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;Errors&quot;,
+    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;C:\\Users\\admin\\IdeaProjects\\node.js-dec2022\\node_modules\\prettier&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;settings.javascript.linters.eslint&quot;,
     &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\admin\\IdeaProjects\\node.js-dec2022\\node_modules\\typescript\\lib&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
@@ -97,6 +88,7 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\admin\IdeaProjects\node.js-dec2022\src\email-templates" />
       <recent name="C:\Users\admin\IdeaProjects\node.js-dec2022\src" />
     </key>
   </component>
@@ -164,7 +156,13 @@
       <workItem from="1689096789646" duration="520000" />
       <workItem from="1689097341313" duration="175000" />
       <workItem from="1689097644787" duration="43000" />
-      <workItem from="1689097976477" duration="2530000" />
+      <workItem from="1689097976477" duration="3165000" />
+      <workItem from="1689266917876" duration="4112000" />
+      <workItem from="1689619301610" duration="3744000" />
+      <workItem from="1689705035585" duration="736000" />
+      <workItem from="1689881646986" duration="2996000" />
+      <workItem from="1690224101397" duration="3009000" />
+      <workItem from="1690309866782" duration="1117000" />
     </task>
     <task id="LOCAL-00001" summary="node">
       <created>1685471923854</created>
@@ -208,7 +206,14 @@
       <option name="project" value="LOCAL" />
       <updated>1688149796153</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="node 2023 lesson 6">
+      <created>1689100572770</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1689100572770</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -220,7 +225,8 @@
     <MESSAGE value="node 2023 ts" />
     <MESSAGE value="node 2023 joi" />
     <MESSAGE value="node 2023 arhitecture" />
-    <option name="LAST_COMMIT_MESSAGE" value="node 2023 arhitecture" />
+    <MESSAGE value="node 2023 lesson 6" />
+    <option name="LAST_COMMIT_MESSAGE" value="node 2023 lesson 6" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
